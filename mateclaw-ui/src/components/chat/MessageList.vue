@@ -11,9 +11,9 @@
           <div class="welcome-screen">
             <div class="welcome-logo">
               <div class="welcome-logo__glow"></div>
-              <img src="/logo/mateclaw_logo_s.png" alt="MateClaw" class="welcome-logo__icon" />
+              <img src="/logo/mateclaw_logo_s.png" alt="DigitalClaw" class="welcome-logo__icon" />
             </div>
-            <h2 class="welcome-title">Mate<span class="welcome-title-highlight">Claw</span></h2>
+            <h2 class="welcome-title">Digital<span class="welcome-title-highlight">Claw</span></h2>
             <p class="welcome-subtitle">{{ subtitle }}</p>
             <div v-if="suggestions.length" class="welcome-suggestions">
               <button

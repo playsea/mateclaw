@@ -1,6 +1,6 @@
 ---
 title: 多智能体引擎 — ReAct + Plan-and-Execute 双模式
-description: MateClaw 的多智能体系统支持 ReAct 推理循环和 Plan-and-Execute 任务拆解两种模式。Agent 之间可以互相委派，实现真正的多智能体协作。
+description: DigitalClaw 的多智能体系统支持 ReAct 推理循环和 Plan-and-Execute 任务拆解两种模式。Agent 之间可以互相委派，实现真正的多智能体协作。
 head:
   - - meta
     - name: keywords
@@ -130,7 +130,7 @@ head:
 - `remember` / `remember_structured` / `forget_structured`（子员工不能写入父员工的长期记忆）
 - `create_employee`（子员工不能凭空造新员工）
 
-这组默认拒绝列表可通过 `mateclaw.delegation.child-denied-tools` 调整。
+这组默认拒绝列表可通过 `DigitalClaw.delegation.child-denied-tools` 调整。
 
 委派和[目标系统](./goals)配合使用——父员工定目标、拆任务、把子任务委派下去，子员工专注执行。
 
@@ -218,7 +218,7 @@ REST：`GET /api/v1/plans?limit=N`（跨员工最近 N 条）、`GET /api/v1/pla
 
 ## 深度思考
 
-不是所有问题都值得深度推理，但有些问题需要。MateClaw 支持按 Agent、按对话打开深度思考模式：
+不是所有问题都值得深度推理，但有些问题需要。DigitalClaw 支持按 Agent、按对话打开深度思考模式：
 
 - **`thinkingLevel`**：`off` / `low` / `medium` / `high` / `max`
 - 支持 Anthropic extended thinking、DashScope qwq 推理、OpenAI o1 `reasoning_effort=high`

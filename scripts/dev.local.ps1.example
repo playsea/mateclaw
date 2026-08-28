@@ -1,0 +1,15 @@
+# 复制本文件为 dev.local.ps1 后修改路径（dev.local.ps1 已被 .gitignore 忽略，不会提交）
+#
+#   copy dev.local.ps1.example dev.local.ps1
+
+# JDK 21（注意：解压后通常还有一层 jdk-21.x.x 子目录）
+$env:JAVA_HOME = "E:\runtime\jdk-21_windows-x64_bin\jdk-21.0.11"
+
+# Node.js 20
+$env:NODE_HOME = "E:\runtime\node-v20.19.0-win-x64"
+
+# Maven 3.9+
+$env:MAVEN_HOME = "E:\runtime\apache-maven-3.9.8\apache-maven-3.9.8"
+
+# 可选：国内 Maven 加速（取消注释）
+# $env:MAVEN_FLAGS = "-Paliyun-first"

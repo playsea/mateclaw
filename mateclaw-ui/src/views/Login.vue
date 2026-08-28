@@ -2,8 +2,8 @@
   <div class="login-page">
     <div class="login-center">
       <div class="login-logo">
-        <img src="/logo/mateclaw_logo_s.png" alt="MateClaw" class="logo-image" />
-        <h1 class="logo-title">Mate<span class="logo-title-highlight">Claw</span></h1>
+        <img src="/logo/mateclaw_logo_s.png" alt="DigitalClaw" class="logo-image" />
+        <h1 class="logo-title">Digital<span class="logo-title-highlight">Claw</span></h1>
       </div>
 
       <form class="login-form" @submit.prevent="handleLogin">
@@ -81,7 +81,8 @@
         </div>
       </div>
 
-      <i18n-t v-if="defaultCredentials" keypath="login.hint" tag="p" class="login-hint">
+    <!--  <i18n-t  v-if="defaultCredentials" keypath="login.hint" tag="p" class="login-hint">  -->
+      <i18n-t  v-if="false" keypath="login.hint" tag="p" class="login-hint">
         <template #username><code>{{ defaultCredentials.username }}</code></template>
         <template #password><code>{{ defaultCredentials.password }}</code></template>
       </i18n-t>

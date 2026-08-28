@@ -105,6 +105,11 @@ deploy/nginx/ssl/*.pem
 !.env.example
 !**/.env.example
 
+# git/github/cusor
+.git/
+.github/
+.cursor/
+
 # Claude Code local settings
 CLAUDE.md
 .claude/settings.local.json
@@ -115,6 +120,9 @@ CLAUDE.md
 
 # Codebase memory (local agent index / graph artifact; do not commit)
 .codebase-memory/
+
+# Windows dev scripts local config (machine-specific paths)
+scripts/dev.local.ps1
 
 # Sync tooling local state (generated each run; report is intentionally tracked)
 scripts/.*-sync-state.json

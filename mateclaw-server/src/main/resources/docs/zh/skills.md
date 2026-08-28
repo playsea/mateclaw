@@ -12,7 +12,7 @@
 
 | 类型 | 来源 | 维护者 |
 |------|------|--------|
-| **`builtin`** | 跟着 MateClaw 一起发布 | 核心团队 |
+| **`builtin`** | 跟着 DigitalClaw 一起发布 | 核心团队 |
 | **`custom`** | 你通过 UI、API 或直接往工作空间扔文件创建 | 你自己 |
 | **`dynamic`** | Agent 在工作中自动合成 | Agent + 你的审批 |
 | **`mcp`** | 由 MCP 服务暴露的工具支撑（同名技能会被 `custom` 真技能覆盖） | MCP 服务作者 |
@@ -192,14 +192,14 @@ scripts:
 | `id` | 主键 |
 | `skill_id` | 外键到 `mate_skill` |
 | `file_path` | `scripts/run.py` 或 `references/cfg.md` 这种相对路径 |
-| `content` | UTF-8 文本（默认单文件 ≤1 MB、bundle ≤50 MB，可通过 `mateclaw.skill.upload.max-entry-size-mb` / `max-total-size-mb` 调整） |
+| `content` | UTF-8 文本（默认单文件 ≤1 MB、bundle ≤50 MB，可通过 `DigitalClaw.skill.upload.max-entry-size-mb` / `max-total-size-mb` 调整） |
 | `content_size` | 字节数（不用拉 blob 就能列） |
 | `sha256` | 内容指纹，给同步器做幂等 diff |
 
 ### 文件系统：技能工作空间
 
 ```
-~/.mateclaw/skills/
+~/.DigitalClaw/skills/
 ├── translate/
 │   ├── SKILL.md               # 技能定义
 │   ├── references/            # 参考资料
@@ -228,7 +228,7 @@ scripts:
 
 第三方打包者千奇百怪——有人把 `setup.sh` 直接放 zip 根，有人 `scripts/` 排在 `SKILL.md` 之前。`ZipSkillFetcher` v1.3 起：
 
-- **两遍扫描**——先把所有条目缓存（受总大小上限保护，默认 50 MB，可用 `mateclaw.skill.upload.max-total-size-mb` 调整），定位 `SKILL.md` 算出 wrapper 前缀，再分类。**条目顺序不再影响结果**。
+- **两遍扫描**——先把所有条目缓存（受总大小上限保护，默认 50 MB，可用 `DigitalClaw.skill.upload.max-total-size-mb` 调整），定位 `SKILL.md` 算出 wrapper 前缀，再分类。**条目顺序不再影响结果**。
 - **根目录扩展名兜底**——SKILL.md 同级的非约定文件按扩展名归类：`.sh / .py / .js / .rb / ...` → `scripts/`，`.md / .json / .yaml / .csv / ...` → `references/`，未识别扩展名落 `WARN` 日志。
 - **写后裁剪 + 空 bundle 守卫**——重装时**先写新文件再裁剪不在新 bundle 里的旧文件**。如果新 bundle 某个桶（`scripts/` 或 `references/`）一个条目都没有，**保留磁盘上的旧文件**——一个解析失败的损坏 zip 不会再把你的 skill 擦干净。要强制清空就传 `forcePrune=true`。
 - **中文文件名不再乱码**（2.0.0）——zip 条目名与文件内容**分别独立探测编码**：Windows 压缩工具打出的 GBK 文件名和 UTF-8 内容各按各的编码解，安装后不再出现"文件名乱码但内容正常"或反过来的组合。
@@ -238,10 +238,10 @@ scripts:
 ### 配置
 
 ```yaml
-mateclaw:
+DigitalClaw:
   skill:
     workspace:
-      root: ${user.home}/.mateclaw/skills
+      root: ${user.home}/.DigitalClaw/skills
       auto-init: true
       delete-policy: archive
       bundled-skills-path: skills
@@ -274,7 +274,7 @@ mateclaw:
 
 **技能市场** 页面（`/skills`）是你浏览、安装、编辑、管理技能的地方。三个来源：
 
-- **内置**——MateClaw 出厂带的技能
+- **内置**——DigitalClaw 出厂带的技能
 - **你的自定义技能**——你创建或上传的
 - **ClawHub**——一个社区技能库，浏览上千个社区技能、预览、一键安装
 
@@ -421,7 +421,7 @@ Agent 的记忆和你一起长大。不用再反复说"记住我喜欢按这个�
 
 ## 安装前的 Preflight 检查
 
-技能装进来不一定能用——它可能需要某个 API key、某个 CLI 工具、某个 MateClaw 开关被打开。
+技能装进来不一定能用——它可能需要某个 API key、某个 CLI 工具、某个 DigitalClaw 开关被打开。
 
 之前你装完一跑才发现少东西。现在：
 
@@ -504,7 +504,7 @@ SkillMarket → tencent-meeting-mcp 卡片 → 详情抽屉 → 密钥 tab
   → mcporter / Python 脚本走腾讯 API → 会议号回来
 ```
 
-不再需要改 `~/.zshrc`、不需要重启 mateclaw。
+不再需要改 `~/.zshrc`、不需要重启 DigitalClaw。
 
 ---
 
@@ -548,7 +548,7 @@ v1.3 起，`ToolExecutionExecutor` 检测到这种情况且 `readSkillFile` 已�
 - 目录引导会告诉模型用技能前先 `load_skill(skillName=<name>)`，用户点名某个具体技能时直接调它。
 
 ```yaml
-mateclaw:
+DigitalClaw:
   skill:
     disclosure:
       load-skill-tool:
@@ -567,7 +567,7 @@ mateclaw:
 - 列表来自 `GET /api/v1/skills/enabled`——包含真实技能 + MCP/ACP 派生的虚拟技能（同名时真实技能优先）。30 秒按工作空间缓存，避免每次重开都拉取。
 - 选中一个技能后，输入框里被插入一句指令：`Use the "技能名" skill: `，光标停在末尾，你接着补充上下文发出去。员工在消息历史里看到这条指令，就会调 `load_skill` 拉起这个技能。
 
-这个菜单的显示条件只看**当前选中了员工、且该员工没有关闭技能**（前端 `currentAgent && !skillsDisabled`）——和全局的渐进式披露开关无关。全局把 `mateclaw.skill.disclosure.load-skill-tool.enabled` 设为 `false` 只会让后端不注册 `load_skill` 工具，菜单照样弹（员工会回退用 `readSkillFile` 之类的方式拉技能）。
+这个菜单的显示条件只看**当前选中了员工、且该员工没有关闭技能**（前端 `currentAgent && !skillsDisabled`）——和全局的渐进式披露开关无关。全局把 `DigitalClaw.skill.disclosure.load-skill-tool.enabled` 设为 `false` 只会让后端不注册 `load_skill` 工具，菜单照样弹（员工会回退用 `readSkillFile` 之类的方式拉技能）。
 
 ---
 
@@ -587,7 +587,7 @@ mateclaw:
 ### 配置
 
 ```yaml
-mateclaw:
+DigitalClaw:
   skill:
     curator:
       enabled: true
@@ -613,7 +613,7 @@ mateclaw:
 
 ## ACP 桥接：把外部编码 Agent 接进来
 
-ACP（Agent Client Protocol）是一种把外部 Agent 客户端（Claude Code、Codex、其他兼容客户端）以技能身份接入 MateClaw 的协议。
+ACP（Agent Client Protocol）是一种把外部 Agent 客户端（Claude Code、Codex、其他兼容客户端）以技能身份接入 DigitalClaw 的协议。
 
 接入之后：
 

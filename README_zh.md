@@ -160,6 +160,10 @@ cd mateclaw-ui
 npm install && npm run dev    # http://localhost:5173
 ```
 
+**Windows 一键启动**：见 [docs/DEV_WINDOWS.md](docs/DEV_WINDOWS.md)（`scripts/dev-start.bat`）。
+
+**技术设计说明（架构 / 改码地图）**：见 [docs/技术设计说明.md](docs/技术设计说明.md)。
+
 默认登录：`admin` / `admin123`
 
 ### Docker 部署

@@ -1,17 +1,17 @@
 ---
-title: MateClaw 项目介绍 — 自部署多智能体 AI 操作系统
-description: MateClaw 是基于 Spring AI Alibaba 的开源多智能体 AI 操作系统。ReAct + Plan-and-Execute 双引擎、LLM Wiki 知识库、四层记忆系统、MCP 工具协议、8 渠道统一接入。一个 JAR 包自部署，数据与外发集成边界由你掌控。
+title: DigitalClaw 项目介绍 — 自部署多智能体 AI 协作系统
+description: DigitalClaw 是基于 MateClaw开源框架基础上的分支发展，基于Spring AI Alibaba 的开源多智能体 AI 协作系统。ReAct + Plan-and-Execute 双引擎、LLM Wiki 知识库、四层记忆系统、MCP 工具协议、8 渠道统一接入。一个 JAR 包自部署，数据与外发集成边界由你掌控。
 head:
   - - meta
     - name: keywords
-      content: MateClaw,多智能体,AI操作系统,自部署AI,Spring AI Alibaba,ReAct,Plan-and-Execute,MCP,LLM Wiki,记忆系统,Tool Guard,开源
+      content: DigitalClaw,多智能体,AI协作系统,自部署AI,Spring AI Alibaba,ReAct,Plan-and-Execute,MCP,LLM Wiki,记忆系统,Tool Guard,开源
 ---
 
-# MateClaw — 自部署多智能体 AI 操作系统
+# DigitalClaw — 自部署多智能体 AI 协作系统
 
-**你的多智能体 AI，跑在你自己的机器上，按你自己的规则。**
+**你自己的多智能体 AI，跑在你自己的机器上，按你自己的规则。**
 
-MateClaw 是一整套可以自部署的 AI 操作系统。一个 JAR 包，一套登录，持久化数据和外发集成由你掌控。
+DigitalClaw 是一整套可以自部署的 AI 协作系统。一个 JAR 包，一套登录，持久化数据和外发集成由你掌控。
 
 **它和别的 AI 不一样的三件事——**
 
@@ -33,7 +33,7 @@ MateClaw 是一整套可以自部署的 AI 操作系统。一个 JAR 包，一�
 
 给你一个聊天框，但明天打开就又从零开始；给你一个工具执行器，但不给你按"暂停"的机会；给你一个知识库，只会检索碎片却说不清它到底知道什么；给你桌面端，却进不了团队在用的聊天软件。或者——所有东西都给了，但全都跑在别人家的云上，你的数据顺便给别人付房租。
 
-MateClaw 换了一个打法：**所有东西放在一个屋檐下，跑在你自己能摸到的硬件上。**
+DigitalClaw 换了一个打法：**所有东西放在一个屋檐下，跑在你自己能摸到的硬件上。**
 
 ---
 
@@ -53,7 +53,7 @@ MateClaw 换了一个打法：**所有东西放在一个屋檐下，跑在你自
 
 ## 为什么"自部署"这件事很重要
 
-把 MateClaw 跑在你自己的机器上，不是合规打个勾那么简单。它改变的是这个产品**到底是什么**。
+把 DigitalClaw 跑在你自己的机器上，不是合规打个勾那么简单。它改变的是这个产品**到底是什么**。
 
 **你掌控数据与外发边界。** 对话、日志、文档和记忆持久化在自己的部署中；只有完成任务所需的内容会发送到你主动配置的云模型、IM 渠道、MCP 或其他工具服务。需要完全本地处理时，可以组合本地模型与本地工具，并关闭外部集成。
 

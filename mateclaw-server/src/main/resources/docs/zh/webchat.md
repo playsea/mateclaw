@@ -1,24 +1,24 @@
 # Web / API 接入(WebChat)指南
 
-MateClaw 的 WebChat 渠道让外部网站通过纯 HTTP / SSE 接入对话能力,无需 JWT。访客身份通过 `visitorId + visitorToken`(HMAC 签发)在共享的 API Key 之下做隔离。
+DigitalClaw 的 WebChat 渠道让外部网站通过纯 HTTP / SSE 接入对话能力,无需 JWT。访客身份通过 `visitorId + visitorToken`(HMAC 签发)在共享的 API Key 之下做隔离。
 
 接入有两条路径:
 
 - **嵌入式小部件** —— 引入一个 JS 文件、调一次 `init(...)`,右下角即出现聊天气泡。最快上线,适合官网 / 落地页客服。
 - **自定义 HTTP / SSE 集成** —— 直接调用下面的 REST + SSE 端点,自己渲染 UI。适合需要深度定制交互的场景。
 
-## 嵌入式小部件(mateclaw-webchat)
+## 嵌入式小部件(DigitalClaw-webchat)
 
 小部件是一个零依赖的浏览器库,产物同时提供 UMD(`<script>` 标签)和 ESM(npm)两种格式。
 
 **方式一:script 标签(UMD)**
 
 ```html
-<script src="https://<你的部署地址>/mateclaw-webchat.umd.js"></script>
+<script src="https://<你的部署地址>/DigitalClaw-webchat.umd.js"></script>
 <script>
-  MateClawWebChat.init({
+  DigitalClawWebChat.init({
     apiKey: 'your-channel-api-key',   // 从渠道编辑页拿
-    server: 'https://<你的部署地址>',  // MateClaw 服务地址
+    server: 'https://<你的部署地址>',  // DigitalClaw 服务地址
     title: '在线客服',
     placeholder: '输入消息...'
   })
@@ -28,11 +28,11 @@ MateClaw 的 WebChat 渠道让外部网站通过纯 HTTP / SSE 接入对话能�
 **方式二:npm(ESM)**
 
 ```bash
-npm install @mateclaw/webchat
+npm install @DigitalClaw/webchat
 ```
 
 ```ts
-import { init } from '@mateclaw/webchat'
+import { init } from '@DigitalClaw/webchat'
 
 init({ apiKey: 'your-channel-api-key', server: 'https://<你的部署地址>' })
 ```
@@ -42,10 +42,10 @@ init({ apiKey: 'your-channel-api-key', server: 'https://<你的部署地址>' })
 | 字段 | 必填 | 默认 | 说明 |
 |---|---|---|---|
 | `apiKey` | 是 | — | 渠道 API Key |
-| `server` | 是 | — | MateClaw 服务地址(不带尾斜杠) |
+| `server` | 是 | — | DigitalClaw 服务地址(不带尾斜杠) |
 | `position` | 否 | `bottom-right` | 气泡位置:`bottom-right` / `bottom-left` |
 | `primaryColor` | 否 | `#D97757` | 主色(任意 CSS 颜色) |
-| `title` | 否 | `MateClaw` | 面板标题 |
+| `title` | 否 | `DigitalClaw` | 面板标题 |
 | `placeholder` | 否 | `Type a message...` | 输入框占位符 |
 
 **行为说明**
@@ -56,7 +56,7 @@ init({ apiKey: 'your-channel-api-key', server: 'https://<你的部署地址>' })
 
 ## 自定义集成:基础
 
-- **Base URL**:`https://<你的 MateClaw 部署地址>/api/v1/channels/webchat`
+- **Base URL**:`https://<你的 DigitalClaw 部署地址>/api/v1/channels/webchat`
 - **认证**:所有端点都要求请求头 `X-MC-Key: <API Key>`(从渠道编辑页拿)。
 - **会话管理端点**额外要求 `X-MC-Visitor-Token: <HMAC>`(首次 `/stream` 调用时由服务端签发并回传)。
 - **响应包装**:`R<T>` → `{"code": 200, "msg": "...", "data": T}`,非 200 视为错误。
@@ -83,7 +83,7 @@ init({ apiKey: 'your-channel-api-key', server: 'https://<你的部署地址>' })
 | POST | `/upload` | + visitorToken | 上传附件(拿 fileId) |
 | GET | `/files` | + visitorToken | 下载文件(上传的或 Agent 生成的) |
 
-管理员级(需要 MateClaw JWT,不在本表的 permitAll 范围内):
+管理员级(需要 DigitalClaw JWT,不在本表的 permitAll 范围内):
 
 | 方法 | 路径 | 用途 |
 |---|---|---|
@@ -97,7 +97,7 @@ init({ apiKey: 'your-channel-api-key', server: 'https://<你的部署地址>' })
 ```text
 ┌──────────┐  POST /stream {visitorId:"v1", message:"你好"}
 │  客户端   │ ─────────────────────────────────────────────► ┌──────────┐
-└──────────┘                                                  │ MateClaw │
+└──────────┘                                                  │ DigitalClaw │
    ▲                                                          └──────────┘
    │  SSE meta event: {sessionId, conversationId, visitorToken}
    │  SSE content_delta events: {text}
@@ -279,4 +279,4 @@ curl -N -X POST https://mate.example.com/api/v1/channels/webchat/stream \
 
 ## 关联
 
-- 上游 epic issue:https://github.com/mateaix/mateclaw/issues/355
+- 上游 epic issue:https://github.com/mateaix/DigitalClaw/issues/355

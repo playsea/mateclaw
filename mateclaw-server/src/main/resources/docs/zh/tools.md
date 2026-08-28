@@ -4,7 +4,7 @@
 
 把语言模型单独放在那里，它只是一个包在文本里的模式匹配器。它不知道现在几点。它不知道你的文件里写了什么。它不能搜索网页、执行命令、看一份 PDF、把任务交给另一个 Agent、打开一个浏览器。它只能**谈论**做这些事。
 
-工具是 MateClaw 解决这件事的方式。每一个工具是一个 Agent 被允许调用的具体操作——读文件、搜网页、执行 shell 命令、从 PDF 抽文字、把任务委托给另一个 Agent。Agent 判断需要某个工具时，发出一次**工具调用**，运行时执行它，结果作为**观察**回到 Agent 下一步推理里。
+工具是 DigitalClaw 解决这件事的方式。每一个工具是一个 Agent 被允许调用的具体操作——读文件、搜网页、执行 shell 命令、从 PDF 抽文字、把任务委托给另一个 Agent。Agent 判断需要某个工具时，发出一次**工具调用**，运行时执行它，结果作为**观察**回到 Agent 下一步推理里。
 
 **二十个内置工具**开箱即用。无限多个可以通过 MCP 服务、自定义技能脚本、或者你自己写的 `@Tool` Spring bean 加进来。
 
@@ -50,9 +50,9 @@ Tool Guard 是守门员。超时是**每个工具独立**的（这样一个慢�
 
 ## 工具注册的三条路
 
-**1. 内置工具。** MateClaw 出厂带的二十个工具，启动时自动注册到工具表里。
+**1. 内置工具。** DigitalClaw 出厂带的二十个工具，启动时自动注册到工具表里。
 
-**2. MCP 服务。** 说 Model Context Protocol 的外部进程动态暴露工具。MateClaw 通过 `tools/list` 发现它们。见 [MCP 协议](./mcp)。
+**2. MCP 服务。** 说 Model Context Protocol 的外部进程动态暴露工具。DigitalClaw 通过 `tools/list` 发现它们。见 [MCP 协议](./mcp)。
 
 > **每 Agent 的 MCP 工具范围（1.4.0+，#117）**：当一个 Agent **没有勾选任何具体的 MCP 工具行**时，已启用的 MCP 工具会**自动并入**它的工具集；一旦它勾选了某些具体 MCP 工具，就**只限定在这个集合**内。只绑技能 / 内置工具的 Agent 仍保留对全部 MCP 工具的访问。
 
@@ -75,7 +75,7 @@ Tool Guard 是守门员。超时是**每个工具独立**的（这样一个慢�
 
 - **页面控制**——Tools 页面分「核心 / 扩展」两栏，内置工具和渠道工具每行有一个层级开关；MCP / ACP 工具的层级是锁定的。
 - **持久化**——层级存在 `mate_tool.disclosure_tier` 和 `mate_mcp_server.disclosure_tier`。
-- **配置**——`mateclaw.tools.disclosure.mode`，默认 `progressive`；设成 `legacy` 则恢复"全部广播"的老行为。
+- **配置**——`DigitalClaw.tools.disclosure.mode`，默认 `progressive`；设成 `legacy` 则恢复"全部广播"的老行为。
 
 **为什么这么做**：不让上下文被白白撑爆——系统 prompt 的体积应该跟当前任务的需要成正比，而不是跟你装了多少工具成正比。
 
@@ -99,7 +99,7 @@ Tool Guard 是守门员。超时是**每个工具独立**的（这样一个慢�
 | `SkillManageTool` | 创建 / 编辑 / 删除技能包 | ⚠️ |
 | `BrowserUseTool` | 驱动无头浏览器 | ⚠️ |
 | `DelegateAgentTool` | 把任务委托给另一个 Agent（支持并行） | — |
-| `MateClawDocTool` | 读取内置项目文档 | — |
+| `DigitalClawDocTool` | 读取内置项目文档 | — |
 | `ImageGenerateTool` | 文生图 / **图生图（1.3.0+）** | — |
 | `VideoGenerateTool` | 文生视频 / 图生视频 | — |
 | `DocxRenderTool` | **1.3.0+** Markdown → .docx（Word 文档） | — |
@@ -227,9 +227,9 @@ Agent A：[调 WebSearchTool]
 - **隔离会话**——被委托的 Agent 跑在自己的会话里
 - **结果截断**——委托结果上限 4000 字符
 
-### MateClawDocTool
+### DigitalClawDocTool
 
-读取内置的 MateClaw 项目文档。让 Agent 回答"MateClaw 里 X 是怎么工作的"这种问题时，**去查真文档**而不是猜。
+读取内置的 DigitalClaw 项目文档。让 Agent 回答"DigitalClaw 里 X 是怎么工作的"这种问题时，**去查真文档**而不是猜。
 
 ### enable_tool —— 激活扩展层工具（1.4.0+）
 
@@ -245,7 +245,7 @@ Agent A：[调 WebSearchTool]
 
 - **走消息历史注入**——加载的内容是注入到**消息历史**里，而不是系统 prompt，这样 **prompt 缓存保持稳定**（系统 prompt 不变，缓存不失效）。
 - **后续回合保持**——已加载的技能在之后的回合里**钉住**，不用反复加载。
-- **配置**——`mateclaw.skill.disclosure.load-skill-tool.enabled`，默认开启。
+- **配置**——`DigitalClaw.skill.disclosure.load-skill-tool.enabled`，默认开启。
 
 详见 [技能系统](./skills)。
 
@@ -270,7 +270,7 @@ Agent A：[调 WebSearchTool]
 
 ## Tool Guard —— 权限层
 
-Tool Guard 是 MateClaw 不让强工具干蠢事的机制。它是**基于规则的**，不是一个扁平的"危险 / 不危险"清单。每条规则说：*对这个工具，带这些参数，在这个上下文里，做 X*——X 是 `allow`、`deny`、或 `require_approval`。
+Tool Guard 是 DigitalClaw 不让强工具干蠢事的机制。它是**基于规则的**，不是一个扁平的"危险 / 不危险"清单。每条规则说：*对这个工具，带这些参数，在这个上下文里，做 X*——X 是 `allow`、`deny`、或 `require_approval`。
 
 核心几张表：
 
@@ -281,7 +281,7 @@ Tool Guard 是 MateClaw 不让强工具干蠢事的机制。它是**基于规则
 示例规则：*`ShellExecuteTool`，命令以 `ls`、`cat`、`grep`、`find` 开头时允许。其他情况要求审批。*
 
 ```yaml
-mateclaw:
+DigitalClaw:
   tool:
     guard:
       enabled: true
@@ -384,7 +384,7 @@ public class FactorialTool {
 
 ## 2.1.0：渐进式工具桥与行动完成约束
 
-工具很多时，MateClaw 先暴露轻量目录，再按当前任务需要展开具体 schema。渐进式工具桥减少上下文占用，也避免一次把数百个参数塞给模型；显式启用后的工具名会缓存和规范化，长循环里不重复扫描 MCP 热路径。
+工具很多时，DigitalClaw 先暴露轻量目录，再按当前任务需要展开具体 schema。渐进式工具桥减少上下文占用，也避免一次把数百个参数塞给模型；显式启用后的工具名会缓存和规范化，长循环里不重复扫描 MCP 热路径。
 
 行动型请求还增加了完成约束：当用户要求“发送、创建、删除、查询外部系统、打开网页执行”等真实动作时，如果运行账本没有记录成功的实质性工具调用，系统会要求模型再尝试一次；仍未调用时以 `action_unverified` 收尾，工具已尝试但失败时以 `action_failed` 收尾，而不是声称“已完成”。当前约束验证的是“存在成功的实质性调用”，并不做工具结果与用户目标之间的语义等价证明。只读解释和无需工具的回答不受影响。
 

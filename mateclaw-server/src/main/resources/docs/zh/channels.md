@@ -2,7 +2,7 @@
 
 **同一个大脑，同一份记忆，跟着你的团队走到哪里就到哪里。**
 
-MateClaw 里的一个渠道是通往同一个 Agent 的另一扇门。团队在飞书里沟通？把 Agent 放进飞书。有人喜欢用 Telegram？同一个 Agent，同一份记忆，出现在 Telegram。Web 控制台给运维，钉钉给现场，Slack 给工程——**一次部署，九扇门**。
+DigitalClaw 里的一个渠道是通往同一个 Agent 的另一扇门。团队在飞书里沟通？把 Agent 放进飞书。有人喜欢用 Telegram？同一个 Agent，同一份记忆，出现在 Telegram。Web 控制台给运维，钉钉给现场，Slack 给工程——**一次部署，九扇门**。
 
 每一个渠道是一个适配器。适配器底下，Agent **不知道（也不在乎）**消息是从哪扇门进来的。
 
@@ -83,7 +83,7 @@ v1.4.0 把飞书做成了"一等公民"渠道——交互卡片、流式卡片�
 
 每一个活跃的 IM 渠道适配器都被一个健康监控盯着。当一个适配器连不上或者长连接断了，监控会启动**指数退避重连**（2s → 4s → 8s → …最大封顶 30s）。瞬时的网络抖动自己就恢复了；持续性的失败会在管理控制台的健康视图里暴露出来。
 
-这就是为什么 MateClaw 的渠道不会在一次抖动之后永远静默：**它们自己会回来。**
+这就是为什么 DigitalClaw 的渠道不会在一次抖动之后永远静默：**它们自己会回来。**
 
 ---
 
@@ -135,7 +135,7 @@ Accept: text/event-stream
 会话 7 分钟内有效，过期自动失效重新生成。剩下的（连接模式、Agent、消息格式）按你的需求填。
 
 ::: tip 它在做什么
-背后走钉钉的 OAuth Device Flow——MateClaw 在 `oapi.dingtalk.com` 申请一个设备码，编成 QR；你确认后，凭证从轮询接口落地到表单。**整个过程没有 webhook，没有公网 IP 要求。**
+背后走钉钉的 OAuth Device Flow——DigitalClaw 在 `oapi.dingtalk.com` 申请一个设备码，编成 QR；你确认后，凭证从轮询接口落地到表单。**整个过程没有 webhook，没有公网 IP 要求。**
 :::
 
 ### 手动配置应用（备选）
@@ -157,7 +157,7 @@ Accept: text/event-stream
 5. **基本信息 > 凭证** → 拿 **Client ID**（AppKey）和 **Client Secret**（AppSecret）
    ![凭证](/images/channels/dingtalk/06-credentials.png)
 
-### 在 MateClaw 里配置
+### 在 DigitalClaw 里配置
 
 ```bash
 curl -X POST http://localhost:18088/api/v1/channels \
@@ -504,7 +504,7 @@ WebSocket / 回调两种模式，官方机器人平台。
 4. 回到表单，**AppID 和 AppSecret 已自动回填**
 
 ::: tip 它在做什么
-背后走 QQ 开放平台的精简版（Lite）授权门户：MateClaw 生成一个临时会话，凭证通过 AES-256-GCM 加密交换落地到表单。会话 12 分钟内有效，过期自动失效。**整个过程没有手抄凭证这一步。**
+背后走 QQ 开放平台的精简版（Lite）授权门户：DigitalClaw 生成一个临时会话，凭证通过 AES-256-GCM 加密交换落地到表单。会话 12 分钟内有效，过期自动失效。**整个过程没有手抄凭证这一步。**
 :::
 
 ### 手动配置应用（备选）
@@ -613,7 +613,7 @@ curl -X POST http://localhost:18088/api/v1/channels \
 
 与上面九个对话渠道不同，**微信公众号（公众号）** 集成是一个**单向发布传输层**，不是入站消息渠道。它被 [内容工作室](./content-studio) 用来把图文文章推进你公众号的**草稿箱**。
 
-- 在**设置**里配公众号 `app_id` / `app_secret`——密钥**以 AES-GCM 加密存储**（设好 `MATECLAW_SETTING_KEY` 并做好备份）。
+- 在**设置**里配公众号 `app_id` / `app_secret`——密钥**以 AES-GCM 加密存储**（设好 `DigitalClaw_SETTING_KEY` 并做好备份）。
 - 微信服务实例按 appId 缓存并**持久化 access token**（微信同 appId 只有一个有效 token），发布链对瞬时错误**重试**，并把已知错误码翻译成可操作提示（比如*把服务器 IP 加进公众号白名单*）。
 - 发布**草稿箱优先**；可选的 `publish` 动作走审批。详见 [内容工作室](./content-studio)。
 
@@ -688,7 +688,7 @@ IM 渠道（企业微信、微信、钉钉）都支持语音输入。语音识�
 
 ## 值得知道的事
 
-- **Webhook 模式需要 HTTPS。** 生产部署应该用 Nginx + SSL 挡在 MateClaw 前面。
+- **Webhook 模式需要 HTTPS。** 生产部署应该用 Nginx + SSL 挡在 DigitalClaw 前面。
 - **长连接模式不需要公网 IP。** Telegram Long-Polling、钉钉 Stream、飞书 WebSocket、Discord Gateway、Slack Socket mode、企业微信长连接——全都可以跑在 NAT 后面。
 - **一个渠道一个 Agent。** 不同渠道可以指向不同 Agent。
 - **会话 id 按渠道隔离（2.0.0）。** 会话 id 的生成编入了渠道标识——不同工作空间各自新建的同类型渠道，即使面对同一个外部用户，也各有各的会话，不会再把两个工作空间的对话串进同一条会话里。

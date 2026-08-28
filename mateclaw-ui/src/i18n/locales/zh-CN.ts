@@ -1,6 +1,6 @@
 export default {
   app: {
-    title: 'MateClaw - AI 助手',
+    title: 'DigitalClaw - 你自己的 AI 数字员工',
   },
   router: {
     chunkLoadFailed: '页面资源加载失败，请检查网络后重试',
@@ -540,7 +540,7 @@ export default {
     slashMenuEmpty: '没有匹配的技能',
     slashMenuSearchPlaceholder: '搜索技能…',
     useSkillDirective: '使用「{name}」技能：',
-    subtitle: '记忆 · 知识库 · 技能 · 自动化 —— 你的个人 AI 工作面',
+    subtitle: '记忆 · 知识库 · 技能 · 自动化 —— 你的个人 AI 工作台',
     // 排队相关
     queuedSending: '正在发送排队消息...',
     queuedWillSend: '已排队，当前步骤结束后发送',
@@ -833,7 +833,7 @@ export default {
     modelDesc: '管理模型预设与默认模型选择',
     systemTitle: '系统设置',
     systemDesc: '语言与运行行为配置',
-    aboutTitle: '关于 MateClaw',
+    aboutTitle: '关于 DigitalClaw',
     aboutDesc: '版本与系统信息',
     about: {
       heroDesc: '一套个人 AI 操作系统，让模型真正进入上下文、记忆、执行、知识和交付的连续流程。',
@@ -1520,7 +1520,7 @@ export default {
       name: '员工名字',
       icon: 'Emoji 或 URL',
       description: '简短描述',
-      systemPrompt: '你是一个有帮助的 AI 助手...',
+      systemPrompt: '你是一个有帮助的 AI 数字员工...',
       role: '例：数据分析师',
       goal: '例：把数据变成可执行洞察',
       backstory: '例：在数据里待了十年，相信先问对问题再写 SQL...',
@@ -3522,9 +3522,9 @@ export default {
   },
   login: {
     kicker: 'AI Operating System',
-    subtitle: '你的智能 AI 助手',
+    subtitle: '你的智能 AI 员工',
     heroTitle: '让 AI 不止会回答，而是真正进入持续工作的系统。',
-    heroDesc: 'MateClaw 的重点不是把更多能力堆进聊天框，而是把上下文、知识、执行和记忆收拢成一个可靠的工作面。',
+    heroDesc: 'DigitalClaw 的重点不是把更多能力堆进聊天框，而是把上下文、知识、执行和记忆收拢成一个可靠的工作面。',
     pointContext: '上下文保持连续',
     pointKnowledge: '知识被组织起来',
     pointExecution: '能力真正能执行',
@@ -4433,7 +4433,7 @@ export default {
     loadFailed: '加载技能管家状态失败',
   },
   onboarding: {
-    title: '欢迎使用 MateClaw',
+    title: '欢迎使用 DigitalClaw',
     subtitle: '配置你的第一个 AI 模型',
     stepPath: '选择方式',
     stepConfigure: '配置模型',
@@ -4455,7 +4455,7 @@ export default {
     verifyTitle: '验证你的模型',
     verifyMessage: '你好！简单介绍一下你自己。',
     send: '发送',
-    startUsing: '开始使用 MateClaw',
+    startUsing: '开始使用 DigitalClaw',
     skip: '跳过',
     back: '返回',
   },

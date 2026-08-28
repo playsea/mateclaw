@@ -50,7 +50,7 @@
 
 部分模型（特别是 `HY-3D-3.1`）可能需要单独申请白名单 / 购买配额，看控制台首页的额度说明。
 
-## 三、在 MateClaw 里配置凭据
+## 三、在 DigitalClaw 里配置凭据
 
 1. 进入 **「模型与凭据」** 页，找到 **「腾讯混元 3D」** 卡片（V71 迁移自动注册）
 2. 点 **「更换」** / **「配置」**
@@ -154,7 +154,7 @@
 → Worker 默认 15 分钟超时。看后端日志：
 
 ```bash
-grep '\[Hunyuan3D\]\|\[Model3dGen\]' logs/mateclaw.log | tail -10
+grep '\[Hunyuan3D\]\|\[Model3dGen\]' logs/DigitalClaw.log | tail -10
 ```
 
 查 polling 是不是被网络抖动卡死，或腾讯端长期 `RUN`/`WAIT` 没推进。可手动取消任务（重启后端 + 它会被标 failed）。

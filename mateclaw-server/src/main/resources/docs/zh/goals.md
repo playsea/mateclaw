@@ -1,10 +1,10 @@
 ---
 title: 持久化目标 — 跨多轮锁定，让员工自己跟进
-description: MateClaw 的 Goal 系统让数字员工把跨多轮的任务锁成一个目标，自己评估进度、自己续命，直到完成或耗尽预算。
+description: DigitalClaw 的 Goal 系统让数字员工把跨多轮的任务锁成一个目标，自己评估进度、自己续命，直到完成或耗尽预算。
 head:
   - - meta
     - name: keywords
-      content: Goal,目标管理,Agent,多轮对话,自动评估,auto-followup,持久化,MateClaw
+      content: Goal,目标管理,Agent,多轮对话,自动评估,auto-followup,持久化,DigitalClaw
 ---
 
 # 持久化目标
@@ -148,7 +148,7 @@ Plan-Execute 模式下，单个步骤可能**抛异常**，也可能陷入**停�
 
 ### 多步计划自动派生目标
 
-一个**多步**（≥2 步）的 Plan-Execute 计划，如果当前对话还没有活跃目标，规划节点会**自动建一个目标**，以计划的步骤作为验收准则，并广播 `goal_created` 事件刷新 UI 的目标面板。这样长计划天然就被目标系统的"跟到完成"语义托住。由 `mateclaw.goal.auto-goal-from-plan` 控制（默认开）。
+一个**多步**（≥2 步）的 Plan-Execute 计划，如果当前对话还没有活跃目标，规划节点会**自动建一个目标**，以计划的步骤作为验收准则，并广播 `goal_created` 事件刷新 UI 的目标面板。这样长计划天然就被目标系统的"跟到完成"语义托住。由 `DigitalClaw.goal.auto-goal-from-plan` 控制（默认开）。
 
 ---
 
@@ -292,7 +292,7 @@ turnsUsed >= turnBudget  或  (agentLlmCallsUsed + evalLlmCallsUsed) >= llmCallB
 `application.yml`：
 
 ```yaml
-mateclaw:
+DigitalClaw:
   goal:
     # 主开关；关闭后图节点对所有调用 pass-through
     enabled: true
